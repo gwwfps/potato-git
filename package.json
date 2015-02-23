@@ -1,0 +1,24 @@
+{
+  "name": "potato-git",
+  "version": "0.1.0",
+  "description": "simple git GUI",
+  "author": "David Zhang",
+  "license": "MIT",
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-atom-shell": "^0.1.10",
+    "gulp-jade": "^1.0.0",
+    "gulp-less": "^3.0.1",
+    "gulp-plumber": "^0.6.6",
+    "gulp-typescript": "^2.4.2",
+    "merge-stream": "^0.1.7"
+  },
+  "dependencies": {
+    "lodash": "^3.3.0",
+    "material-ui": "^0.7.0",
+    "omniscient": "^3.0.0",
+    "react": "^0.12.2"
+  },
+  "main": "js/index.js"
+}

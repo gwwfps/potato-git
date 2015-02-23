@@ -1,0 +1,15 @@
+mixin css(href)
+  link(href=href, rel='stylesheet', type='text/css')
+
+mixin js(src)
+  script(src=src, type='text/javascript')
+
+doctype html
+html
+  head
+    title Potato Git
+    +css('index.css')
+  body
+    #main
+    +js('bundle.js')
+    p Hello!!

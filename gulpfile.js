@@ -6,6 +6,7 @@ var plumber = require('gulp-plumber');
 var atomshell = require('gulp-atom-shell');
 var del = require('rimraf');
 var merge = require('merge-stream');
+var ts = require('gulp-typescript');
 var _ = require('lodash');
 
 
@@ -21,8 +22,9 @@ var paths = {
   assets: './src/static/**/*',
   dist: {
     root: './dist/',
-    app: './dist/app/',
-    appFiles: './dist/app/**',
+    app: './dist/atom-shell/resources/app/',
+    js: './dist/atom-shell/resources/app/js',
+    dts: './dist/atom-shell/resources/app/dts',
     atomshell: './dist/atom-shell',
     zip: './dist/app.zip'
   }
@@ -47,6 +49,21 @@ gulp.task('less', function() {
     .pipe(gulp.dest(paths.dist.app));
 });
 
+var tsProject = ts.createProject({
+  declarationFiles: true,
+  noExternalResolve: true,
+  module: 'commonjs'
+});
+
+gulp.task('ts', function() {
+  var tsResult = gulp.src(paths.ts).pipe(ts(tsProject));
+
+  return merge(
+    tsResult.dts.pipe(gulp.dest(paths.dist.dts)),
+    tsResult.js.pipe(gulp.dest(paths.dist.js))
+  );
+});
+
 gulp.task('copy', function() {
   merge(gulp.src(paths.assets), gulp.src('./package.json'))
     .pipe(plumber())
@@ -57,6 +74,7 @@ gulp.task('watch', ['build'], function() {
   gulp.watch([paths.jade], ['jade']);
   gulp.watch([paths.assets], ['copy']);
   gulp.watch([paths.less.files], ['less']);
+  gulp.watch([paths.ts], ['ts']);
 });
 
 gulp.task('atomshell', function() {
@@ -69,6 +87,6 @@ gulp.task('atomshell', function() {
     .pipe(gulp.dest(paths.dist.atomshell));
 });
 
-gulp.task('build', ['clean', 'jade', 'copy', 'less', 'atomshell']);
+gulp.task('build', ['clean', 'atomshell', 'jade', 'copy', 'less', 'ts']);
 
 gulp.task('default', ['build']);

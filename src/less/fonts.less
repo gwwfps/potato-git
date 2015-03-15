@@ -1,0 +1,24 @@
+.roboto-def(@variant, @weight) {
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: @weight;
+    src: local('Roboto @{variant}'), local('Roboto-@{variant}'), url('fonts/Roboto-@{variant}.ttf') format('ttf');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+  }
+
+  @font-face {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: @weight;
+    src: local('Roboto @{variant} Italic'), local('Roboto-@{variant}Italic'), url('fonts/Roboto-@{variant}Italic.ttf') format('ttf');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+  }
+}
+
+.roboto-def('Thin', 100);
+.roboto-def('Light', 300);
+.roboto-def('Regular', 400);
+.roboto-def('Medium', 500);
+.roboto-def('Bold', 700);
+.roboto-def('Black', 900);

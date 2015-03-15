@@ -1,17 +1,28 @@
 /// <references src="node.d.ts" />
 
-// from https://gist.github.com/anurse/3fe1f38c9cc0ea927c4f
+// based on https://gist.github.com/anurse/3fe1f38c9cc0ea927c4f
 
-declare module "app" {
+declare module 'app' {
   var app: AtomShell.App;
 
   export = app;
 }
 
-declare module "browser-window" {
+declare module 'browser-window' {
   class _BrowserWindow extends AtomShell.BrowserWindow { }
 
   export = _BrowserWindow;
+}
+
+declare module 'global-shortcut' {  
+  class _globalShorcut {
+    static register(accelerator: string, callback: Function): void;
+    static isRegistered(accelerator: string): boolean;
+    static unregister(accelerator: string): void;
+    static unregisterAll(): void;
+  }
+
+  export = _globalShorcut;
 }
 
 declare module AtomShell {

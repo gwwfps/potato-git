@@ -22,10 +22,9 @@ var paths = {
   assets: './src/static/**/*',
   dist: {
     root: './dist/',
-    app: './dist/atom-shell/resources/app/',
-    js: './dist/atom-shell/resources/app/js',
-    dts: './dist/atom-shell/resources/app/dts',
-    atomshell: './dist/atom-shell',
+    app: './dist/resources/app/',
+    js: './dist/resources/app/js',
+    dts: './dist/resources/app/dts',
     zip: './dist/app.zip'
   }
 };
@@ -52,7 +51,8 @@ gulp.task('less', function() {
 var tsProject = ts.createProject({
   declarationFiles: true,
   noExternalResolve: true,
-  module: 'commonjs'
+  module: 'commonjs',
+  target: 'es5'
 });
 
 gulp.task('ts', function() {
@@ -70,7 +70,9 @@ gulp.task('copy', function() {
     .pipe(gulp.dest(paths.dist.app));
 });
 
-gulp.task('watch', ['build'], function() {
+gulp.task('watch', ['build', 'watch:only']);
+
+gulp.task('watch:only', function() {
   gulp.watch([paths.jade], ['jade']);
   gulp.watch([paths.assets], ['copy']);
   gulp.watch([paths.less.files], ['less']);
@@ -84,7 +86,7 @@ gulp.task('atomshell', function() {
       productName: pkg.name,
       productVersion: pkg.version
     })
-    .pipe(gulp.dest(paths.dist.atomshell));
+    .pipe(gulp.dest(paths.dist.root));
 });
 
 gulp.task('build', ['clean', 'atomshell', 'jade', 'copy', 'less', 'ts']);

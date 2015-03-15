@@ -20,5 +20,5 @@
     "omniscient": "^3.0.0",
     "react": "^0.12.2"
   },
-  "main": "js/index.js"
+  "main": "js/node/index.js"
 }

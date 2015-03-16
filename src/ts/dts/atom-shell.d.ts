@@ -15,14 +15,10 @@ declare module 'browser-window' {
 }
 
 declare module 'global-shortcut' {  
-  class _globalShorcut {
-    static register(accelerator: string, callback: Function): void;
-    static isRegistered(accelerator: string): boolean;
-    static unregister(accelerator: string): void;
-    static unregisterAll(): void;
-  }
-
-  export = _globalShorcut;
+  function register(accelerator: string, callback: Function): void;
+  function isRegistered(accelerator: string): boolean;
+  function unregister(accelerator: string): void;
+  function unregisterAll(): void;
 }
 
 declare module AtomShell {

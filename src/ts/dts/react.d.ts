@@ -3,7 +3,7 @@
 // Definitions by: Asana <https://asana.com>, AssureSign <http://www.assuresign.com>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-declare module "react" {
+declare module React {
     //
     // React Elements
     // ----------------------------------------------------------------------
@@ -168,7 +168,7 @@ declare module "react" {
     // Class Interfaces
     // ----------------------------------------------------------------------
 
-    interface ComponentClass<P> {
+    export interface ComponentClass<P> {
         new(props?: P, context?: any): Component<P, any>;
         propTypes?: ValidationMap<P>;
         contextTypes?: ValidationMap<any>;
@@ -757,4 +757,8 @@ declare module "react" {
         item(index: number): Touch;
         identifiedTouch(identifier: number): Touch;
     }
+}
+
+declare module 'react' {
+  export = React;
 }

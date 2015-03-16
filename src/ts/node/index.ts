@@ -1,4 +1,3 @@
-/// <reference path="../dts/atom-shell.d.ts" />
 import app = require('app');
 import BrowserWindow = require('browser-window');
 import globalShortcut = require('global-shortcut');
@@ -13,7 +12,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', () => {  
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+  mainWindow = new BrowserWindow({ width: 800, height: 600, frame: false });
 
   globalShortcut.register('ctrl+i',() => {
     mainWindow.openDevTools();

@@ -4,9 +4,12 @@ var jade = require('gulp-jade');
 var less = require('gulp-less');
 var plumber = require('gulp-plumber');
 var atomshell = require('gulp-atom-shell');
-var del = require('rimraf');
+var del = require('del');
 var merge = require('merge-stream');
 var ts = require('gulp-typescript');
+var babel = require("gulp-babel");
+var webpack = require('gulp-webpack');
+var rename = require("gulp-rename");
 var _ = require('lodash');
 
 
@@ -24,7 +27,7 @@ var paths = {
     root: './dist/',
     app: './dist/resources/app/',
     js: './dist/resources/app/js',
-    dts: './dist/resources/app/dts',
+    bundleEntry: './dist/resources/app/js/web/index.js',
     zip: './dist/app.zip'
   }
 };
@@ -49,23 +52,28 @@ gulp.task('less', function() {
 });
 
 var tsProject = ts.createProject({
-  declarationFiles: true,
+  declarationFiles: false,
   noExternalResolve: true,
   module: 'commonjs',
-  target: 'es5'
+  target: 'es6'
 });
 
 gulp.task('ts', function() {
-  var tsResult = gulp.src(paths.ts).pipe(ts(tsProject));
+  return gulp.src(paths.ts)
+    .pipe(ts(tsProject)).js
+    .pipe(babel({ blacklist: ['strict'] }))
+    .pipe(gulp.dest(paths.dist.js));
+});
 
-  return merge(
-    tsResult.dts.pipe(gulp.dest(paths.dist.dts)),
-    tsResult.js.pipe(gulp.dest(paths.dist.js))
-  );
+gulp.task('webpack', ['ts'], function() {
+  return gulp.src(paths.dist.bundleEntry)
+    .pipe(webpack())
+    .pipe(rename('bundle.js'))
+    .pipe(gulp.dest(paths.dist.js));
 });
 
 gulp.task('copy', function() {
-  merge(gulp.src(paths.assets), gulp.src('./package.json'))
+  return merge(gulp.src(paths.assets), gulp.src('./package.json'))
     .pipe(plumber())
     .pipe(gulp.dest(paths.dist.app));
 });
@@ -76,7 +84,7 @@ gulp.task('watch:only', function() {
   gulp.watch([paths.jade], ['jade']);
   gulp.watch([paths.assets], ['copy']);
   gulp.watch([paths.less.files], ['less']);
-  gulp.watch([paths.ts], ['ts']);
+  gulp.watch([paths.ts], ['ts', 'webpack']);
 });
 
 gulp.task('atomshell', function() {
@@ -89,6 +97,6 @@ gulp.task('atomshell', function() {
     .pipe(gulp.dest(paths.dist.root));
 });
 
-gulp.task('build', ['clean', 'atomshell', 'jade', 'copy', 'less', 'ts']);
+gulp.task('build', ['clean', 'atomshell', 'jade', 'copy', 'less', 'ts', 'webpack']);
 
 gulp.task('default', ['build']);

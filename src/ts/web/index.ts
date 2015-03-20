@@ -1,6 +1,6 @@
 ﻿import React = require('react');
-import Utils = require('./Utils');
+import TypedReact = require('typed-react');
 import MainInterface = require('./components/MainInterface');
 
 
-React.render(Utils.toEl(MainInterface), document.getElementById('main'));
+React.render(React.createElement(TypedReact.createClass(MainInterface)), document.getElementById('main'));

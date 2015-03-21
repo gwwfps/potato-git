@@ -12,21 +12,20 @@ class MainInterface extends StatelessComponent<{}> {
       { payload: '3', text: 'Opt 3' }
     ];
 
-    return {
-      tag: 'div', props: { id: 'mainMenu' }, children: [
-        {
-          tag: M.Toolbar, children: [
-            {
-              tag: M.ToolbarGroup, props: { float: 'left' }, children: [
-                {
-                  tag: M.DropDownMenu, props: { menuItems: options }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    };
+    return { tag: 'div', props: { id: 'mainMenu' }, children: [
+      { tag: M.Toolbar, children: [
+        { tag: M.ToolbarGroup, props: { float: 'left', key: 0 }, children: [
+          { tag: M.DropDownMenu, props: { menuItems: options } },
+        ]},
+        { tag: M.ToolbarGroup, props: { float: 'right', key: 1 }, children: [
+          { tag: M.FontIcon, props: { className: 'mdi-close', onClick: this.onClickClose } }
+        ]}
+      ]}
+    ]};
+  }
+
+  onClickClose() {
+    window.close();
   }
 }
 export = MainInterface;

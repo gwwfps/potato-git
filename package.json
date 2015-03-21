@@ -21,6 +21,7 @@
     "baobab": "^0.4.0",
     "lodash": "^3.3.0",
     "material-ui": "^0.7.1",
+    "mdi": "^0.9.72-alpha",
     "react": "^0.12.2",
     "typed-react": "^3.3.1"
   },

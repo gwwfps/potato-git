@@ -4,19 +4,19 @@ import TypedReact = require("typed-react");
 
 
 interface RenderNode<P> {
-  tag: String|React.ComponentClass<P>|ComponentClass<P, any>;
+  tag: String|React.ComponentClass<P>|ComponentClass<P, {}>;
   props?: P;
-  children?: RenderNode<any>[];
+  children?: RenderNode<{}>[];
 }
 
 interface ComponentClass<P, S> {
   new (): TypedReact.Component<P, S>;
 }
 
-const createElement = (node: RenderNode<any>): React.ReactElement<any> => {
+const createElement = (node: RenderNode<{}>): React.ReactElement<{}> => {
   var tag = node.tag;
   if (tag instanceof TypedReact.Component) {    
-    tag = TypedReact.createClass(<ComponentClass<any, any>> tag);
+    tag = TypedReact.createClass(<ComponentClass<{}, {}>> tag);
   }
   var args = [node.tag, node.props || {}];
   if (node.children) {

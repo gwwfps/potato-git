@@ -1,13 +1,8 @@
 ﻿/// <references src="react.d.ts" />
 
 declare module 'material-ui' {
-  var Toolbar: React.ComponentClass<any>;
-
-  interface ToolbarGroupProps {
-    float: string;
-  }
-  var ToolbarGroup: React.ComponentClass<ToolbarGroupProps>;
-
-  var FontIcon: React.ComponentClass<any>;
-  var DropDownMenu: React.ComponentClass<any>;
+  var Toolbar: React.ComponentClass<{}>;
+  var ToolbarGroup: React.ComponentClass<{ float: string; }>;
+  var FontIcon: React.ComponentClass<{ className: string; }>;
+  var DropDownMenu: React.ComponentClass<{}>;
 }

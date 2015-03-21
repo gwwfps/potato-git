@@ -72,10 +72,18 @@ gulp.task('webpack', ['ts'], function() {
     .pipe(gulp.dest(paths.dist.js));
 });
 
+var copiedModules = ['mdi'];
 gulp.task('copy', function() {
-  return merge(gulp.src(paths.assets), gulp.src('./package.json'))
-    .pipe(plumber())
-    .pipe(gulp.dest(paths.dist.app));
+  var sources = [
+    gulp.src(paths.assets).pipe(gulp.dest(paths.dist.app)),
+    gulp.src('./package.json').pipe(gulp.dest(paths.dist.app))
+  ];
+  sources = sources.concat(copiedModules.map(function(name) {
+    return gulp.src('./node_modules/' + name + '/**/*')
+      .pipe(gulp.dest(paths.dist.app + '/node_modules/' + name));
+  }));
+  return merge.apply(this, sources)
+    .pipe(plumber());
 });
 
 gulp.task('watch', ['build', 'watch:only']);
